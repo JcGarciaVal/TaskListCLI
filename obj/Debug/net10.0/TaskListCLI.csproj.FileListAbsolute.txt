@@ -1,0 +1,14 @@
+/home/juang/Projects/TaskListCLI/bin/Debug/net10.0/TaskListCLI
+/home/juang/Projects/TaskListCLI/bin/Debug/net10.0/TaskListCLI.deps.json
+/home/juang/Projects/TaskListCLI/bin/Debug/net10.0/TaskListCLI.runtimeconfig.json
+/home/juang/Projects/TaskListCLI/bin/Debug/net10.0/TaskListCLI.dll
+/home/juang/Projects/TaskListCLI/bin/Debug/net10.0/TaskListCLI.pdb
+/home/juang/Projects/TaskListCLI/obj/Debug/net10.0/TaskListCLI.GeneratedMSBuildEditorConfig.editorconfig
+/home/juang/Projects/TaskListCLI/obj/Debug/net10.0/TaskListCLI.AssemblyInfoInputs.cache
+/home/juang/Projects/TaskListCLI/obj/Debug/net10.0/TaskListCLI.AssemblyInfo.cs
+/home/juang/Projects/TaskListCLI/obj/Debug/net10.0/TaskListCLI.csproj.CoreCompileInputs.cache
+/home/juang/Projects/TaskListCLI/obj/Debug/net10.0/TaskListCLI.dll
+/home/juang/Projects/TaskListCLI/obj/Debug/net10.0/refint/TaskListCLI.dll
+/home/juang/Projects/TaskListCLI/obj/Debug/net10.0/TaskListCLI.pdb
+/home/juang/Projects/TaskListCLI/obj/Debug/net10.0/TaskListCLI.genruntimeconfig.cache
+/home/juang/Projects/TaskListCLI/obj/Debug/net10.0/ref/TaskListCLI.dll
