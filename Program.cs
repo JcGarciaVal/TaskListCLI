@@ -1,4 +1,5 @@
-﻿using TaskListCLI.Models;
+﻿using TaskListCLI.Enums;
+using TaskListCLI.Models;
 using TaskListCLI.Services;
 
 TaskServices _services = new();
@@ -12,6 +13,9 @@ while (sistema)
     Console.WriteLine("\t1. Create new task");
     Console.WriteLine("\t2. View tasks");
     Console.WriteLine("\t3. Compelete task");
+    Console.WriteLine("\t4. View Task Group");
+    Console.WriteLine("\t5. Delete Task");
+    Console.WriteLine("\t6. Exit");
 
     Console.Write("Your select: ");
     while
@@ -73,7 +77,13 @@ while (sistema)
         break;
 
         case 3:
-            var listPendding = _services.GetTask();
+            var listPendding = _services.GetTask().Where(g=> g.StateTask == State.Pendding);
+            
+            if (!listPendding.Any()){
+                Console.WriteLine("No hay pendientes!");
+                continue;    
+            }
+
             Console.WriteLine("\n---------------------------  List Task  ---------------------------\n");
             foreach(var task in listPendding)
             {
@@ -95,6 +105,40 @@ while (sistema)
             {
                 Console.WriteLine("Error: " + ex.Message);
             }
+        break;
+        
+        case 4:
+            _services.GetAllGroupState();
+        break;
+
+        case 5:
+            var listTaskDelete = _services.GetTask();
+
+            Console.WriteLine("\n---------------------------  List Task  ---------------------------\n");
+            foreach(var task in listTaskDelete)
+            {
+                Console.WriteLine($"{task.Id, 3} | {task.Title,-15} | {task.Description, -30} | {task.StateTask, 10}");
+            }
+            Console.WriteLine("\n------------------------------------------------------------------");
+            Console.Write("\nSelect id task complete: ");
+            int idDelete;
+            while(!int.TryParse(Console.ReadLine(), out idDelete) || idDelete < 0)
+            {
+                Console.WriteLine("[!] ID invalid!.");
+                Console.Write("Select id task complete: ");
+            }
+            try
+            {
+                _services.DeleteTask(idDelete);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+            }
+        break;
+
+        case 6:
+            sistema = false;
         break;
     }
 
