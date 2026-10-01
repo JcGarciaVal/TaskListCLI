@@ -21,8 +21,8 @@ while (sistema)
     while
     (
         !int.TryParse(Console.ReadLine(), out option) 
-        || option > 5 
-        || option < 0
+        || option > 6 
+        || option < 1
     )
     {
         Console.WriteLine("[!] Respuesta incorrecta. Your Select: ");  
@@ -49,7 +49,7 @@ while (sistema)
                 description = Console.ReadLine();
             };
 
-            var newTask = new TaskClass
+            var newTask = new TaskItem
             {
               Title = title,
               Description = description
@@ -59,7 +59,7 @@ while (sistema)
                 _services.PostTask(newTask);
                 Console.WriteLine("Task create!\n");
             }
-            catch(Exception ex)
+            catch(InvalidOperationException ex)
             {
                 Console.WriteLine("Error: " + ex.Message);
             }
@@ -77,7 +77,7 @@ while (sistema)
         break;
 
         case 3:
-            var listPendding = _services.GetTask().Where(g=> g.StateTask == State.Pendding);
+            var listPendding = _services.GetTask().Where(g=> g.StateTask == State.Pending);
             
             if (!listPendding.Any()){
                 Console.WriteLine("No hay pendientes!");
@@ -92,7 +92,7 @@ while (sistema)
             Console.WriteLine("\n------------------------------------------------------------------");
             Console.Write("\nSelect id task complete: ");
             int idComplete;
-            while(!int.TryParse(Console.ReadLine(), out idComplete) || idComplete < 0)
+            while(!int.TryParse(Console.ReadLine(), out idComplete) || idComplete <= 0)
             {
                 Console.WriteLine("[!] ID invalid!.");
                 Console.Write("Select id task complete: ");
@@ -101,7 +101,7 @@ while (sistema)
             {
                 _services.SelectTaskComplete(idComplete);
             }
-            catch(Exception ex)
+            catch(InvalidOperationException ex)
             {
                 Console.WriteLine("Error: " + ex.Message);
             }
@@ -122,7 +122,7 @@ while (sistema)
             Console.WriteLine("\n------------------------------------------------------------------");
             Console.Write("\nSelect id task complete: ");
             int idDelete;
-            while(!int.TryParse(Console.ReadLine(), out idDelete) || idDelete < 0)
+            while(!int.TryParse(Console.ReadLine(), out idDelete) || idDelete <= 0)
             {
                 Console.WriteLine("[!] ID invalid!.");
                 Console.Write("Select id task complete: ");
@@ -131,7 +131,7 @@ while (sistema)
             {
                 _services.DeleteTask(idDelete);
             }
-            catch(Exception ex)
+            catch(InvalidOperationException ex)
             {
                 Console.WriteLine("Error: " + ex.Message);
             }

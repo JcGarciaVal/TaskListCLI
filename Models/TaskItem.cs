@@ -1,7 +1,7 @@
 using TaskListCLI.Enums;
 namespace TaskListCLI.Models;
 
-public class TaskClass
+public class TaskItem
 {
     public int Id {get; set;}
     public string Title {get; set;} = string.Empty;

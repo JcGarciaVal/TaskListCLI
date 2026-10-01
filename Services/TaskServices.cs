@@ -7,11 +7,11 @@ namespace TaskListCLI.Services;
 
 public class TaskServices
 {
-    private readonly ManejoRepository _data = new();
+    private readonly TaskRepository _data = new();
 
-    public void PostTask(TaskClass task)
+    public void PostTask(TaskItem task)
     {
-        var list = _data.GetJsonData();
+        var list = _data.SendTask();
 
         if (
             string.IsNullOrWhiteSpace(task.Title) 
@@ -20,53 +20,46 @@ public class TaskServices
             throw new Exception("Datos ingresados incorrectos");
         }
                 
-
         int idLastTask = list.Any() ? list.Max(g=> g.Id) : 0;
-        var newTask = new TaskClass
+
+        var newTask = new TaskItem
         {
             Id = idLastTask + 1,
             Title = task.Title,
             Description = task.Description,
-            StateTask = State.Pendding
+            StateTask = State.Pending
         };
 
         list.Add(newTask);
 
-        _data.PostJsonData(list);
+        _data.SaveTask(list);
     }
 
-    public List<TaskClass> GetTask()
+    public List<TaskItem> GetTask()
     {
-        return _data.GetJsonData();
+        return _data.SendTask();
     }
     
     public void SelectTaskComplete(int idComplete)
     {
-        var list = _data.GetJsonData();
-        int idLastTask = list.Any() ? list.Max(g=> g.Id) : 0;
+        var list = _data.SendTask();
 
-        if(idComplete > idLastTask )
+        var task = list.FirstOrDefault(t => t.Id == idComplete);
+
+        if (task is null)
         {
-            throw new Exception("ID invalid.");
+            throw new InvalidOperationException("Task not found.");
         }
 
-        var newComplete = list
-            .FirstOrDefault(i => i.Id == idComplete);
+        task.StateTask = State.Completed;
 
-        if(newComplete is null)
-        {
-            throw new Exception("Task not exist.");
-        }
-
-        newComplete.StateTask = State.Complete;
-
-        _data.PostJsonData(list);
+        _data.SaveTask(list);
 
     }
 
     public void GetAllGroupState()
     {
-        var list = _data.GetJsonData();
+        var list = _data.SendTask();
         
         var groupTask = list
             .GroupBy(t => t.StateTask)
@@ -93,26 +86,16 @@ public class TaskServices
 
     public void DeleteTask(int idDelete)
     {
-        var list = _data.GetJsonData();
-        int idLastTask = list.Any() ? list.Max(g=> g.Id) : 0;
+        var list = _data.SendTask();
+        var task = list.FirstOrDefault(t => t.Id == idDelete);
 
-        if(idDelete > idLastTask )
+        if (task is null)
         {
-            throw new Exception("ID invalid.");
+            throw new InvalidOperationException("Task not found.");
         }
 
-        var taskDelete = list
-            .FirstOrDefault(i => i.Id == idDelete);
+        list.Remove(task);
 
-        if(taskDelete is null)
-        {
-            throw new Exception("Task not exist.");
-        }
-
-        list.Remove(taskDelete);
-
-        _data.PostJsonData(list);
+        _data.SaveTask(list);
     }
-    
-    //eliminar una tarea que no se necesite
 }
